@@ -6,6 +6,12 @@
 
 > 为影视飓风 Gate 的「目录模板」场景单独重做：保留蓝色主色与树形结构，但换成原生 AppKit/SwiftUI，输入框完整支持复制粘贴。
 
+## 下载
+
+- [最新 Releases](https://github.com/MartinRuXia/Trellis/releases/latest)
+  - Windows 10 / 11（x64）：`Trellis-Setup-1.0.0.exe`
+  - macOS 14+：`Trellis.dmg`
+
 ## 两个平台
 
 - **macOS**：本仓库根目录的 Xcode 工程（SwiftUI），构建方式见下方
