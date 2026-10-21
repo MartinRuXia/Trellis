@@ -38,20 +38,10 @@ pnpm start
 
 ## 打包 Windows 安装包
 
-在 Windows 上：
-
 ```bash
 pnpm dist:win
-```
-
-在 macOS 上（没有 Wine 时，electron-builder 的 NSIS 步骤会失败），分两步：
-
-```bash
-# 1. 只生成 win-unpacked（x64）
-npx electron-builder --win --x64 --dir
-
-# 2. 用 NSIS 官方 macOS 版 makensis 编译安装包
-NSISDIR=<nsis 目录> <nsis 目录>/mac/makensis installer.nsi
+# 或
+npx electron-builder --win nsis --x64
 ```
 
 产物：`release/Trellis-Setup-1.0.0.exe`

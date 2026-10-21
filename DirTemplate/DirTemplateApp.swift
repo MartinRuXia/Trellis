@@ -6,7 +6,7 @@ struct DirTemplateApp: App {
     @StateObject private var store = TemplateStore()
 
     var body: some Scene {
-        WindowGroup("目录模板") {
+        WindowGroup("Trellis") {
             ContentView()
                 .environmentObject(store)
                 .tint(Theme.accent)

@@ -90,7 +90,7 @@ final class TemplateStore: ObservableObject {
 
     private let fileManager = FileManager.default
     private let libraryURL: URL
-    private let saveQueue = DispatchQueue(label: "com.martin.dirtemplate.library", qos: .utility)
+    private let saveQueue = DispatchQueue(label: "com.martin.trellis.library", qos: .utility)
     private var pendingSave: DispatchWorkItem?
 
     // MARK: 初始化
@@ -98,7 +98,12 @@ final class TemplateStore: ObservableObject {
     init() {
         let support = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
             ?? fileManager.homeDirectoryForCurrentUser.appendingPathComponent("Library/Application Support")
-        var folder = support.appendingPathComponent("DirTemplate", isDirectory: true)
+        let legacyFolder = support.appendingPathComponent("DirTemplate", isDirectory: true)
+        var folder = support.appendingPathComponent("Trellis", isDirectory: true)
+        if !fileManager.fileExists(atPath: folder.path),
+           fileManager.fileExists(atPath: legacyFolder.path) {
+            try? fileManager.copyItem(at: legacyFolder, to: folder)
+        }
         #if DEBUG
         var override = ProcessInfo.processInfo.environment["DIRTEMPLATE_STORE_DIR"]
         if let index = CommandLine.arguments.firstIndex(of: "--store"),
@@ -283,7 +288,8 @@ final class TemplateStore: ObservableObject {
     /// 点击画布时把键盘焦点从顶部输入框收回来，否则 Tab 会被系统当成焦点切换
     func focusCanvas() {
         canvasActive = true
-        NSApp.keyWindow?.makeFirstResponder(nil)
+        let window = NSApp.keyWindow ?? NSApp.windows.first(where: { $0.isVisible && !($0 is NSPanel) })
+        window?.makeFirstResponder(nil)
     }
 
     private func bumpTree() {

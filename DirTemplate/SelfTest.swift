@@ -138,7 +138,7 @@ enum SelfTest {
         check(store.selectedTemplate?.folderCount == 8, "模板共 8 个文件夹")
 
         let target = FileManager.default.temporaryDirectory
-            .appendingPathComponent("DirTemplateSelfTest-\(UUID().uuidString)", isDirectory: true)
+            .appendingPathComponent("TrellisSelfTest-\(UUID().uuidString)", isDirectory: true)
         try? FileManager.default.createDirectory(at: target, withIntermediateDirectories: true)
 
         store.draftProjectName = "自检项目"
@@ -164,8 +164,9 @@ enum SelfTest {
         Task { @MainActor in
             // 确保窗口在前台，避免无激活启动时输入框拿不到焦点
             if let window = NSApp.windows.first {
-                NSApp.activate(ignoringOtherApps: true)
+                NSRunningApplication.current.activate(options: [.activateAllWindows])
                 window.makeKeyAndOrderFront(nil)
+                window.makeKey()
             }
             try? await Task.sleep(for: .milliseconds(500))
 
@@ -241,6 +242,9 @@ enum SelfTest {
             if let window = NSApp.windows.first(where: { $0.isVisible }),
                let content = window.contentView,
                let field = firstEditableField(in: content) {
+                NSRunningApplication.current.activate(options: [.activateAllWindows])
+                window.makeKeyAndOrderFront(nil)
+                window.makeKey()
                 window.makeFirstResponder(field)
                 try? await Task.sleep(for: .milliseconds(150))
                 let fieldHadFocus = window.firstResponder is NSTextView

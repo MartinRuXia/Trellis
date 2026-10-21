@@ -1,12 +1,12 @@
-目录模板 1.0 · 使用说明
+Trellis 1.0 · 使用说明
 ========================================
 
 一、安装
-1. 把左边的「目录模板」拖到右边的「应用程序」文件夹。
+1. 把左边的「Trellis」拖到右边的「应用程序」文件夹。
 2. 首次打开：在「应用程序」里右键 App →「打开」。
    App 为本地签名（ad-hoc），没有做 Apple 公证，首次打开确认一次即可。
 3. 如果系统提示“已损坏，无法打开”，打开「终端」执行：
-   xattr -dr com.apple.quarantine /Applications/目录模板.app
+   xattr -dr com.apple.quarantine /Applications/Trellis.app
 
 二、快速建模板（重点）
 模板编辑区是一张横向思维导图：根节点在最左边，分支向右展开。
@@ -66,7 +66,7 @@ Esc       取消输入
 ⌘C / ⌘V / ⌘A   复制 / 粘贴 / 全选
 
 七、数据位置
-~/Library/Application Support/DirTemplate/library.json
+~/Library/Application Support/Trellis/library.json
 
 模板只保存在本机，不联网、不上传。
 卸载 App 不会删除模板库；要彻底清除，手动删除上面的文件夹即可。

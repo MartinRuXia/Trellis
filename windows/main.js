@@ -39,7 +39,7 @@ function createWindow() {
     minWidth: 1040,
     minHeight: 680,
     backgroundColor: '#fbfcfe',
-    title: 'Trellis · 目录模板',
+    title: 'Trellis',
     autoHideMenuBar: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),

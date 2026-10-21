@@ -31,7 +31,7 @@ struct ContentView: View {
                     Text(store.errorMessage ?? "")
                 }
         }
-        .navigationTitle("目录模板")
+        .navigationTitle("Trellis")
         .toolbar { toolbar }
         .alert(LocalizedStringKey(store.dialog?.title ?? ""),
                isPresented: dialogBinding) {
@@ -130,8 +130,12 @@ struct WelcomeView: View {
                 .font(.system(size: 54, weight: .light))
                 .foregroundStyle(Theme.accent)
 
-            Text("目录模板")
+            Text("Trellis")
                 .font(.system(size: 24, weight: .semibold))
+
+            Text("目录模板 · 一键生成项目文件夹")
+                .font(.system(size: 11))
+                .foregroundStyle(.secondary)
 
             Text("把常用的项目目录结构保存成模板，\n选择位置后一键生成完整的项目文件夹。")
                 .font(.system(size: 13))

@@ -24,7 +24,7 @@
 ### 模板库
 - 新建、重命名、复制、删除模板（删除模板不会动磁盘上已经生成的项目）
 - 模板导出为 JSON / 从 JSON 导入，方便在同事之间共享（导入时自动改名，不会覆盖）
-- 本地持久化：`~/Library/Application Support/DirTemplate/library.json`
+- 本地持久化：`~/Library/Application Support/Trellis/library.json`
 
 ### 思维导图式模板编辑（Gate 风格）
 - 横向思维导图：根节点在左，按层级向右展开，每个顶层分支一种颜色
@@ -102,7 +102,7 @@ xcodebuild -project DirTemplate.xcodeproj \
   build
 ```
 
-产物：`build/Build/Products/Release/目录模板.app`
+产物：`build/Build/Products/Release/Trellis.app`
 
 > 如果在沙箱环境里构建，加上 `OTHER_SWIFT_FLAGS="-disable-sandbox"`。
 > Swift 的宏插件 `swift-plugin-server` 会再用 `sandbox-exec` 包一层，在已经被沙箱限制的进程里会报
@@ -110,7 +110,7 @@ xcodebuild -project DirTemplate.xcodeproj \
 
 - 架构：Universal（arm64 + x86_64）
 - 最低系统：macOS 14.0
-- 签名：ad-hoc。拷到别的 Mac 若被 Gatekeeper 拦，右键 → 打开，或 `xattr -dr com.apple.quarantine 目录模板.app`
+- 签名：ad-hoc。拷到别的 Mac 若被 Gatekeeper 拦，右键 → 打开，或 `xattr -dr com.apple.quarantine Trellis.app`
 - 仓库只包含源码与文档，构建产物（`.app` / `.dmg`）不提交
 
 ## 测试
@@ -129,13 +129,13 @@ Debug 版还带一个无界面自检，会验证菜单的粘贴快捷键、生�
 DIRTEMPLATE_SELFTEST=1 \
 DIRTEMPLATE_STORE_DIR=/tmp/dt-store \
 DIRTEMPLATE_SHOT=/tmp/ui.png \
-"build/Build/Products/Debug/目录模板.app/Contents/MacOS/目录模板"
+"build/Build/Products/Debug/Trellis.app/Contents/MacOS/Trellis"
 ```
 
 ## 数据与隐私
 
 - 所有模板都只存在本机，不上传、不联网
-- 模板库：`~/Library/Application Support/DirTemplate/library.json`
+- 模板库：`~/Library/Application Support/Trellis/library.json`
 - 最近生成记录只保存路径，不保存文件内容；移除记录不会删除磁盘目录
 
 ## 已知限制
