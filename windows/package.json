@@ -1,0 +1,62 @@
+{
+  "name": "trellis",
+  "productName": "Trellis",
+  "version": "1.0.0",
+  "description": "Trellis - 一键生成项目目录模板",
+  "main": "main.js",
+  "author": "MartinMax",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "electron .",
+    "dist:win": "electron-builder --win nsis --x64"
+  },
+  "devDependencies": {
+    "electron": "33.2.0",
+    "electron-builder": "25.1.8"
+  },
+  "build": {
+    "appId": "com.martin.trellis",
+    "productName": "Trellis",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "renderer/**",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico",
+      "artifactName": "Trellis-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Trellis 目录模板",
+      "installerLanguages": [
+        "zh_CN"
+      ],
+      "language": "2052",
+      "deleteAppDataOnUninstall": false
+    }
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "electron",
+      "electron-winstaller",
+      "esbuild"
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+node_modules/
+release/
+.tools/
+.test-userdata/
+.test-shot.png
+.crop.png

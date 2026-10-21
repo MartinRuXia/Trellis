@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; script-src 'self'">
+  <title>Trellis · 目录模板</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <aside id="sidebar">
+      <div class="brand">
+        <div class="brand-mark"></div>
+        <div class="brand-text"><b>Trellis</b><small>目录模板</small></div>
+      </div>
+      <div class="side-section">
+        <div class="side-title">模板库</div>
+        <div id="template-list" class="side-list"></div>
+      </div>
+      <div class="side-section" id="recent-section">
+        <div class="side-title">最近创建</div>
+        <div id="recent-list" class="side-list"></div>
+      </div>
+      <div class="side-footer">
+        <button id="new-template" class="link-btn">＋ 新建模板</button>
+        <span id="side-count" class="muted"></span>
+      </div>
+    </aside>
+
+    <main id="editor">
+      <header id="editor-header">
+        <div class="title-row">
+          <h1>编辑模板</h1>
+          <div class="header-actions">
+            <button id="add-root" class="btn small">＋ 添加根文件夹</button>
+            <button id="template-menu" class="icon-btn" title="更多模板操作">⋯</button>
+          </div>
+        </div>
+        <div class="meta-row">
+          <label class="meta-field">模板名称 <input id="template-name" class="input" spellcheck="false"></label>
+          <label class="meta-field">备注 <input id="template-note" class="input" placeholder="可选" spellcheck="false"></label>
+        </div>
+        <div id="template-stats" class="stats"></div>
+      </header>
+
+      <div id="creating-banner" class="banner hidden">
+        <span>输入名称后：回车 继续建同级 · Tab 建子级 · Esc 取消</span>
+        <button id="cancel-naming" class="link-btn">取消命名</button>
+      </div>
+
+      <div id="canvas-wrap">
+        <div id="canvas" tabindex="0">
+          <div id="canvas-inner">
+            <div id="canvas-content">
+              <svg id="links" xmlns="http://www.w3.org/2000/svg"></svg>
+              <div id="nodes"></div>
+                </div>
+          </div>
+          <input id="inline-editor" class="inline-editor hidden" spellcheck="false" autocomplete="off">
+          <div id="empty-hint" class="empty-hint hidden">按 回车 或点「根节点」右侧的 + 添加第一个文件夹</div>
+        </div>
+        <div id="zoom-controls">
+          <button data-zoom="-1" title="缩小">−</button>
+          <button data-zoom="0" title="实际大小">⟲</button>
+          <button data-zoom="1" title="放大">＋</button>
+        </div>
+      </div>
+
+      <footer id="editor-footer">
+        <button id="add-root-2" class="link-btn">＋ 添加根文件夹</button>
+        <span class="muted small">单击选中 · 再点改名 · 回车 同级 · Tab 子级 · 滚轮平移</span>
+      </footer>
+    </main>
+
+    <aside id="inspector">
+      <h2>生成项目</h2>
+      <p class="sub">选择模板 → 命名 → 选择位置，一键生成</p>
+
+      <div class="card">
+        <label class="field-label">项目名称</label>
+        <div class="row">
+          <input id="project-name" class="input" placeholder="例如：20251021 秋日宣传片" spellcheck="false">
+          <button id="paste-name" class="icon-btn" title="粘贴剪贴板">📋</button>
+        </div>
+        <div id="name-error" class="error hidden"></div>
+
+        <div class="divider"></div>
+        <label class="field-label">目标位置</label>
+        <div class="row">
+          <div id="target-path" class="path muted">未选择</div>
+          <button id="choose-target" class="btn small">选择…</button>
+        </div>
+
+        <div class="divider"></div>
+        <label class="field-label">生成预览</label>
+        <div id="preview-path" class="preview path">请先选择目标位置</div>
+        <div id="preview-meta" class="muted small"></div>
+
+        <button id="generate" class="btn primary wide">✨ 生成项目</button>
+        <label class="check"><input type="checkbox" id="reveal-after" checked> 生成后在资源管理器中显示</label>
+      </div>
+
+      <div id="success-card" class="card success hidden">
+        <div class="success-title">✓ 已生成</div>
+        <div id="success-name" class="success-name"></div>
+        <div id="success-path" class="path muted small"></div>
+        <button id="reveal-created" class="btn small">显示</button>
+      </div>
+
+      <div class="card" id="info-card">
+        <div class="field-label">模板信息</div>
+        <div class="info-row"><span>名称</span><b id="info-name">—</b></div>
+        <div class="info-row"><span>文件夹</span><b id="info-count">0 个</b></div>
+        <div class="info-row"><span>层级</span><b id="info-depth">0 级</b></div>
+        <button id="export-template" class="btn small">导出模板…</button>
+      </div>
+
+      <div class="card">
+        <div class="field-label">可在文件夹名称里使用的变量</div>
+        <div class="tokens">
+          <code>{项目名}</code><code>{日期}</code><code>{年}</code><code>{月}</code><code>{日}</code><code>{yyyyMMdd}</code><code>{时间}</code>
+        </div>
+        <p class="muted small">生成时自动替换成当前项目名和当天日期。例如「{日期} 交付」会变成「2025-10-21 交付」。</p>
+      </div>
+    </aside>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <div id="modal" class="modal hidden">
+    <div class="modal-box">
+      <h3 id="modal-title"></h3>
+      <p id="modal-message"></p>
+      <input id="modal-input" class="input hidden" spellcheck="false">
+      <div class="modal-actions">
+        <button id="modal-cancel" class="btn">取消</button>
+        <button id="modal-confirm" class="btn primary">确定</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="context-menu" class="context-menu hidden"></div>
+  <script src="app.js"></script>
+</body>
+</html>
