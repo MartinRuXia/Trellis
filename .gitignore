@@ -1,0 +1,8 @@
+.DS_Store
+build/
+.cache/
+.dmg-work/
+.dmg-tools/
+dist/
+xcuserdata/
+*.xcuserstate
